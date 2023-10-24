@@ -8,4 +8,5 @@ ActiveRecord::Base.establish_connection(
 
 require_relative "../lib/user"
 require_relative "../lib/saved_word"
+require_relative "../lib/dictionary_api"
 

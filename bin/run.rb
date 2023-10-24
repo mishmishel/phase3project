@@ -5,17 +5,93 @@ class Run
     def initialize
         puts "Welcome to the Dictionary Helper!".blue.bold
 
-        puts "Please enter your username to begin:" # prompt user
+        puts "Please enter your username to begin:".red # prompt user
         username = gets.chomp
 
         if User.find_by_name(username)
             @user = User.find_by_name(username) # find by username and store in @user variable
-            puts "Welcome back, #{user.name}!"
+            puts "Welcome back, #{user.name}!".red
         else
             @user = User.create(name: username)
-            puts "Nice to meet you, #{user.name}. Your account was successfully created."
+            puts "Nice to meet you, #{user.name}. Your account was successfully created.".red
+        end
+
+        is_active = true
+
+        while is_active do 
+            choice = menu 
+
+            if choice.downcase == ".exit"
+                is_active = false # way to get out of while loop is to make is_active false
+                puts "Thank you for using Dictionary Helper! See you next time, #{user.name}!".blue.bold
+            elsif choice.downcase == ".dictionary"
+                system("clear")
+                dictionary
+            elsif choice.downcase == ".explore"
+                system("clear")
+                puts "Explore"
+            elsif choice.downcase == ".word-list"
+                system("clear")
+                puts "Word List"
+            else 
+                system("clear")
+                puts "Command not found!".red.bold
+            end
         end
     end
+
+    def menu
+        puts "Menu:".blue.bold
+        puts "#{".dictionary".green.bold}\t - to search for a word's definition"
+        puts "#{".explore".green.bold}\t - to explore and learn new words"
+        puts "#{".word-list".green.bold}\t - to view previously saved words"
+        puts "#{".exit".green.bold}\t\t - to exit out of Dictionary Helper"
+
+        puts "Please enter your choice from the options above:".red
+        gets.chomp 
+    end
+
+    def dictionary
+        puts "Enter the word you would like meaning of:".red
+        user_input = gets.chomp 
+
+        word_data = DictionaryAPI.get_word(user_input)
+
+        if !word_data.empty?
+            meanings = word_data[:meanings]
+
+            meanings.each_with_index do |meaning, index|
+            part_of_speech = meaning["partOfSpeech"]
+            definitions = meaning["definitions"]
+            
+            puts "Meaning #{index + 1}: #{part_of_speech}".blue.bold
+            definitions.each_with_index do |definition, def_index|
+                puts "  Definition #{def_index + 1}: #{definition["definition"]}".blue
+            end
+        end
+    else
+    puts "Word not found."
+end
+
+
+       # word = DictionaryAPI.get_word(input)
+        #if word.empty? 
+           # puts "No word found! Either this word is not in Dictionary Helper or you need to check your spelling!".red
+       # else
+           # display_word_info(word)
+        # end
+    #end
+
+    def display_word_info(word)
+        puts "#{word[:name]}"
+
+        puts "Definitions:"
+        word[:meanings].each_with_index do |meaning, i|
+            puts "#{i + 1}. #{meaning["meanings"]["definitions"]["definition"]}"
+        end
+    end
+
+end
 end
 
 Run.new
