@@ -29,7 +29,7 @@ class Run
                 dictionary
             elsif choice.downcase == ".synonym"
                 system("clear")
-                puts "Explore"
+                synonym
             elsif choice.downcase == ".word-list"
                 system("clear")
                 puts "Word List"
@@ -66,11 +66,43 @@ class Run
             
             puts "Meaning #{index + 1}: #{part_of_speech}".blue.bold
             definitions.each_with_index do |definition, def_index|
-                puts "  Definition #{def_index + 1}: #{definition["definition"]}".blue
+                puts "Definition #{def_index + 1}: #{definition["definition"]}".blue
             end
         end
-    else
-    puts "Word not found."
+        else
+        puts "Word not found."
+        end
+    end
+
+    def synonym
+
+        synonyms_found = false
+
+        puts "Enter the word you would like the synonym of:".red
+        user_input = gets.chomp 
+
+        word_data = DictionaryAPI.get_word(user_input)
+
+        if !word_data.empty?
+            meanings = word_data[:meanings]
+
+            meanings.each_with_index do |meaning, index|
+            part_of_speech = meaning["partOfSpeech"]
+            synonyms = meaning["synonyms"]
+            
+            if !synonyms.empty?
+                puts "Synonyms for #{user_input}:".blue.bold
+                synonyms.each do |synonym|
+                    puts " - #{synonym}".blue
+                end
+            elsif synonyms_found
+                puts "No synonyms found for #{user_input}".red
+            end
+        end
+        else
+            puts "Word not found."
+        end
+
     end
 
     def display_word_info(word)
@@ -81,8 +113,9 @@ class Run
             puts "#{i + 1}. #{meaning["meanings"]["definitions"]["definition"]}"
         end
     end
+
 end
-end
+
 
 
 Run.new

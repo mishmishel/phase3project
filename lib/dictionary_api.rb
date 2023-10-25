@@ -16,7 +16,7 @@ class DictionaryAPI
                 word = {
                   name: json.first["word"],
                   meanings: json.first["meanings"],
-                  # other key-value pairs here
+                  synonyms: json.first["synonyms"]
                 }
                 return word
             end
@@ -25,4 +25,5 @@ class DictionaryAPI
         end
     end
 end
+
 
