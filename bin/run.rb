@@ -27,7 +27,7 @@ class Run
             elsif choice.downcase == ".dictionary"
                 system("clear")
                 dictionary
-            elsif choice.downcase == ".explore"
+            elsif choice.downcase == ".synonym"
                 system("clear")
                 puts "Explore"
             elsif choice.downcase == ".word-list"
@@ -43,7 +43,7 @@ class Run
     def menu
         puts "Menu:".blue.bold
         puts "#{".dictionary".green.bold}\t - to search for a word's definition"
-        puts "#{".explore".green.bold}\t - to explore and learn new words"
+        puts "#{".synonym".green.bold}\t - to explore synonyms of words"
         puts "#{".word-list".green.bold}\t - to view previously saved words"
         puts "#{".exit".green.bold}\t\t - to exit out of Dictionary Helper"
 
@@ -71,16 +71,7 @@ class Run
         end
     else
     puts "Word not found."
-end
-
-
-       # word = DictionaryAPI.get_word(input)
-        #if word.empty? 
-           # puts "No word found! Either this word is not in Dictionary Helper or you need to check your spelling!".red
-       # else
-           # display_word_info(word)
-        # end
-    #end
+    end
 
     def display_word_info(word)
         puts "#{word[:name]}"
@@ -90,8 +81,8 @@ end
             puts "#{i + 1}. #{meaning["meanings"]["definitions"]["definition"]}"
         end
     end
+end
+end
 
-end
-end
 
 Run.new
