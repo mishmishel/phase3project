@@ -95,7 +95,7 @@ class Run
                 synonyms.each do |synonym|
                     puts " - #{synonym}".blue
                 end
-            elsif synonyms_found
+            elsif synonyms_found # If no synonyms are found
                 puts "No synonyms found for #{user_input}".red
             end
         end
@@ -103,15 +103,6 @@ class Run
             puts "Word not found."
         end
 
-    end
-
-    def display_word_info(word)
-        puts "#{word[:name]}"
-
-        puts "Definitions:"
-        word[:meanings].each_with_index do |meaning, i|
-            puts "#{i + 1}. #{meaning["meanings"]["definitions"]["definition"]}"
-        end
     end
 
 end
