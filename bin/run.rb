@@ -52,59 +52,73 @@ class Run
     end
 
     def dictionary
-        puts "Enter the word you would like meaning of:".red
-        user_input = gets.chomp 
+        is_dictionary = true
 
-        word_data = DictionaryAPI.get_word(user_input)
+        while is_dictionary do
+            puts "Enter the word you would like meaning of (enter .back to return to main menu):".red
+            user_input = gets.chomp 
 
-        if !word_data.empty?
-            meanings = word_data[:meanings]
+            if user_input == ".back"
+                is_dictionary = false
+            else
+                word_data = DictionaryAPI.get_word(user_input)
 
-            meanings.each_with_index do |meaning, index|
-            part_of_speech = meaning["partOfSpeech"]
-            definitions = meaning["definitions"]
-            
-            puts "Meaning #{index + 1}: #{part_of_speech}".blue.bold
-            definitions.each_with_index do |definition, def_index|
-                puts "Definition #{def_index + 1}: #{definition["definition"]}".blue
+                if !word_data.empty?
+                    meanings = word_data[:meanings]
+
+                    meanings.each_with_index do |meaning, index|
+                    part_of_speech = meaning["partOfSpeech"]
+                    definitions = meaning["definitions"]
+                    
+                    puts "Meaning #{index + 1}: #{part_of_speech}".blue.bold
+                    definitions.each_with_index do |definition, def_index|
+                        puts "Definition #{def_index + 1}: #{definition["definition"]}".blue
+                    end
+                end
+                elsif word_data.empty? 
+                    puts "Word not found."
+                end 
             end
-        end
-        else
-        puts "Word not found."
         end
     end
 
     def synonym
+        is_synonym = true
 
-        synonyms_found = false
+        while is_synonym do
 
-        puts "Enter the word you would like the synonym of:".red
-        user_input = gets.chomp 
+            synonyms_found = false
 
-        word_data = DictionaryAPI.get_word(user_input)
+            puts "Enter the word you would like the synonym of:".red
+            user_input = gets.chomp 
 
-        if !word_data.empty?
-            meanings = word_data[:meanings]
+            if user_input == ".back"
+                is_synonym = false
+            else
+                word_data = DictionaryAPI.get_word(user_input)
 
-            meanings.each_with_index do |meaning, index|
-            part_of_speech = meaning["partOfSpeech"]
-            synonyms = meaning["synonyms"]
-            
-            if !synonyms.empty?
-                puts "Synonyms for #{user_input}:".blue.bold
-                synonyms.each do |synonym|
-                    puts " - #{synonym}".blue
+                if !word_data.empty?
+                    meanings = word_data[:meanings]
+
+                    meanings.each_with_index do |meaning, index|
+                    part_of_speech = meaning["partOfSpeech"]
+                    synonyms = meaning["synonyms"]
+                    
+                    if !synonyms.empty?
+                        puts "Synonyms for #{user_input}:".blue.bold
+                        synonyms.each do |synonym|
+                            puts " - #{synonym}".blue
+                        end
+                    elsif synonyms_found # If no synonyms are found
+                        puts "No synonyms found for #{user_input}".red
+                    end
                 end
-            elsif synonyms_found # If no synonyms are found
-                puts "No synonyms found for #{user_input}".red
+                else
+                    puts "Word not found."
+                end
             end
         end
-        else
-            puts "Word not found."
-        end
-
     end
-
 end
 
 
