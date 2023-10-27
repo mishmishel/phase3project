@@ -89,7 +89,7 @@ class Run
 
             synonyms_found = false
 
-            puts "Enter the word you would like the synonym of:".red
+            puts "Enter the word you would like the synonym of (enter .back to return to main menu):".red
             user_input = gets.chomp 
 
             if user_input == ".back"
