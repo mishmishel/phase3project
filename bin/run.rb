@@ -30,9 +30,6 @@ class Run
             elsif choice.downcase == ".synonym"
                 system("clear")
                 synonym
-            elsif choice.downcase == ".word-list"
-                system("clear")
-                puts "Word List"
             else 
                 system("clear")
                 puts "Command not found!".red.bold
@@ -44,7 +41,6 @@ class Run
         puts "Menu:".blue.bold
         puts "#{".dictionary".green.bold}\t - to search for a word's definition"
         puts "#{".synonym".green.bold}\t - to explore synonyms of words"
-        puts "#{".word-list".green.bold}\t - to view previously saved words"
         puts "#{".exit".green.bold}\t\t - to exit out of Dictionary Helper"
 
         puts "Please enter your choice from the options above:".red
@@ -109,12 +105,15 @@ class Run
                         synonyms.each do |synonym|
                             puts " - #{synonym}".blue
                         end
-                    elsif synonyms_found # If no synonyms are found
-                        puts "No synonyms found for #{user_input}".red
+                    else 
+                        synonyms_found = true
                     end
                 end
+                    if synonyms_found # If no synonyms are found
+                        puts "No synonyms found for #{user_input}.".blue
+                    end
                 else
-                    puts "Word not found."
+                    puts "Word not found. Check your spelling!".blue
                 end
             end
         end
