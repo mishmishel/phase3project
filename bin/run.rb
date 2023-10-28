@@ -109,7 +109,7 @@ class Run
                         synonyms_found = true
                     end
                 end
-                    if synonyms_found # If no synonyms are found
+                    if synonyms_found == false # If no synonyms are found
                         puts "No synonyms found for #{user_input}.".blue
                     end
                 else
