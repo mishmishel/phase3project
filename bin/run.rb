@@ -72,7 +72,7 @@ class Run
                     end
                 end
                 elsif word_data.empty? 
-                    puts "Word not found."
+                    puts "Word not found.".blue
                 end 
             end
         end
